@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Analytics.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Aggregation.xml">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/sap/ZTEI_PART_SRV_SRV/$metadata">
+        <edmx:Include Namespace="ZTEI_PART_SRV_SRV"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local">
+
+            <!-- PartMaster Field Labels & Analytics -->
+            <Annotations Target="ZTEI_PART_SRV_SRV.PartMaster/CriticalityLevel">
+                <Annotation Term="Analytics.Dimension" Bool="true"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.PartMaster/StatusCriticality">
+                <Annotation Term="Analytics.Measure" Bool="true"/>
+                <Annotation Term="Aggregation.DefaultAggregationMethod" EnumMember="Aggregation.AggregationMethod/sum"/>
+            </Annotations>
+
+            
+            <Annotations Target="ZTEI_PART_SRV_SRV.PartMaster/PartId">
+                <Annotation Term="Common.Label" String="Part ID"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.PartMaster/PartNo">
+                <Annotation Term="Common.Label" String="Part Number"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.PartMaster/DrawingNo">
+                <Annotation Term="Common.Label" String="Drawing No"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.PartMaster/PartDescription">
+                <Annotation Term="Common.Label" String="Description"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.PartMaster/MaterialSpec">
+                <Annotation Term="Common.Label" String="Material Specification"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.PartMaster/CriticalityLevel">
+                <Annotation Term="Common.Label" String="Criticality Level"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.PartMaster/Status">
+                <Annotation Term="Common.Label" String="Status"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.PartMaster/CreationDate">
+                <Annotation Term="Common.Label" String="Creation Date"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.PartMaster/CreatedBy">
+                <Annotation Term="Common.Label" String="Created By"/>
+            </Annotations>
+
+            <!-- QualStatus Field Labels -->
+            <Annotations Target="ZTEI_PART_SRV_SRV.QualStatus/PartId">
+                <Annotation Term="Common.Label" String="Part ID"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.QualStatus/TestSeq">
+                <Annotation Term="Common.Label" String="Test Seq"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.QualStatus/DimensionName">
+                <Annotation Term="Common.Label" String="Dimension"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.QualStatus/NominalValue">
+                <Annotation Term="Common.Label" String="Nominal"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.QualStatus/TolerancePlus">
+                <Annotation Term="Common.Label" String="Tol (+)"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.QualStatus/ToleranceMinus">
+                <Annotation Term="Common.Label" String="Tol (-)"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.QualStatus/ActualValue">
+                <Annotation Term="Common.Label" String="Actual"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.QualStatus/QualResult">
+                <Annotation Term="Common.Label" String="Result"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.QualStatus/CmmDeviceId">
+                <Annotation Term="Common.Label" String="CMM Device"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.QualStatus/InspectorId">
+                <Annotation Term="Common.Label" String="Inspector"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.QualStatus/MeasurementDate">
+                <Annotation Term="Common.Label" String="Measurement Date"/>
+            </Annotations>
+
+            <!-- QualStatus List Columns -->
+            <Annotations Target="ZTEI_PART_SRV_SRV.QualStatus">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <!-- Custom Actions (Row Buttons) -->
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Onayla (Approve)"/>
+                            <PropertyValue Property="Action" String="ZTEI_PART_SRV_SRV.ZTEI_PART_SRV_SRV_Entities/ApproveQuality"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+                        </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Onayı Kaldır (Reject)"/>
+                            <PropertyValue Property="Action" String="ZTEI_PART_SRV_SRV.ZTEI_PART_SRV_SRV_Entities/RejectQuality"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+                        </Record>
+
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="TestSeq"/>
+                            <PropertyValue Property="Label" String="Seq"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="DimensionName"/>
+                            <PropertyValue Property="Label" String="Dimension"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="NominalValue"/>
+                            <PropertyValue Property="Label" String="Nominal"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="TolerancePlus"/>
+                            <PropertyValue Property="Label" String="Tol (+)"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ToleranceMinus"/>
+                            <PropertyValue Property="Label" String="Tol (-)"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ActualValue"/>
+                            <PropertyValue Property="Label" String="Actual"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="QualResult"/>
+                            <PropertyValue Property="Label" String="Result"/>
+                            <PropertyValue Property="Criticality" Path="QualCriticality"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="CmmDeviceId"/>
+                            <PropertyValue Property="Label" String="CMM Device"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="InspectorId"/>
+                            <PropertyValue Property="Label" String="Inspector"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <!-- OperLog Field Labels -->
+            <Annotations Target="ZTEI_PART_SRV_SRV.OperLog/PartId">
+                <Annotation Term="Common.Label" String="Part ID"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.OperLog/OperationSeq">
+                <Annotation Term="Common.Label" String="Operation Seq"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.OperLog/OperationType">
+                <Annotation Term="Common.Label" String="Operation Type"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.OperLog/MachineId">
+                <Annotation Term="Common.Label" String="Machine ID"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.OperLog/OperatorId">
+                <Annotation Term="Common.Label" String="Operator ID"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.OperLog/StartDate">
+                <Annotation Term="Common.Label" String="Start Date"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.OperLog/EndDate">
+                <Annotation Term="Common.Label" String="End Date"/>
+            </Annotations>
+            <Annotations Target="ZTEI_PART_SRV_SRV.OperLog/OperResult">
+                <Annotation Term="Common.Label" String="Result"/>
+            </Annotations>
+
+            <!-- OperLog List Columns (for navigation table on detail page) -->
+            <Annotations Target="ZTEI_PART_SRV_SRV.OperLog">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <!-- Custom Actions (Row Buttons) -->
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Onayla (Approve)"/>
+                            <PropertyValue Property="Action" String="ZTEI_PART_SRV_SRV.ZTEI_PART_SRV_SRV_Entities/ApproveOperation"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+                        </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Onayı Kaldır (Reject)"/>
+                            <PropertyValue Property="Action" String="ZTEI_PART_SRV_SRV.ZTEI_PART_SRV_SRV_Entities/RejectOperation"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+                        </Record>
+
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="OperationSeq"/>
+                            <PropertyValue Property="Label" String="Seq"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="OperationType"/>
+                            <PropertyValue Property="Label" String="Operation Type"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="MachineId"/>
+                            <PropertyValue Property="Label" String="Machine"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="OperatorId"/>
+                            <PropertyValue Property="Label" String="Operator"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="StartDate"/>
+                            <PropertyValue Property="Label" String="Start Date"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="EndDate"/>
+                            <PropertyValue Property="Label" String="End Date"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="OperResult"/>
+                            <PropertyValue Property="Label" String="Result"/>
+                            <PropertyValue Property="Criticality" Path="ResultCriticality"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <!-- PartMaster: KPI DataPoints -->
+            <Annotations Target="ZTEI_PART_SRV_SRV.PartMaster/CriticalityLevel">
+                <Annotation Term="UI.DataPoint" Qualifier="CritLevelDP">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Value" Path="CriticalityLevel"/>
+                        <PropertyValue Property="Title" String="Criticality Level"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <!-- PartMaster: Chart - CriticalityLevel dağılımı (Donut) -->
+            <Annotations Target="ZTEI_PART_SRV_SRV.PartMaster">
+                <Annotation Term="UI.Chart">
+                    <Record Type="UI.ChartDefinitionType">
+                        <PropertyValue Property="Title" String="Parts by Criticality Level"/>
+                        <PropertyValue Property="Description" String="Distribution of parts across criticality levels"/>
+                        <PropertyValue Property="ChartType" EnumMember="UI.ChartType/Donut"/>
+                        <PropertyValue Property="Dimensions">
+                            <Collection>
+                                <PropertyPath>CriticalityLevel</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Measures">
+                            <Collection>
+                                <PropertyPath>StatusCriticality</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="MeasureAttributes">
+                            <Collection>
+                                <Record Type="UI.ChartMeasureAttributeType">
+                                    <PropertyValue Property="Measure" PropertyPath="StatusCriticality"/>
+                                    <PropertyValue Property="Role" EnumMember="UI.ChartMeasureRoleType/Axis1"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="DimensionAttributes">
+                            <Collection>
+                                <Record Type="UI.ChartDimensionAttributeType">
+                                    <PropertyValue Property="Dimension" PropertyPath="CriticalityLevel"/>
+                                    <PropertyValue Property="Role" EnumMember="UI.ChartDimensionRoleType/Category"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+                <!-- PresentationVariant: Chart + Table birlikte gösterimi -->
+                <Annotation Term="UI.PresentationVariant">
+                    <Record Type="UI.PresentationVariantType">
+                        <PropertyValue Property="Text" String="Default"/>
+                        <PropertyValue Property="SortOrder">
+                            <Collection>
+                                <Record Type="Common.SortOrderType">
+                                    <PropertyValue Property="Property" PropertyPath="CriticalityLevel"/>
+                                    <PropertyValue Property="Descending" Bool="false"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Visualizations">
+                            <Collection>
+                                <AnnotationPath>@UI.Chart</AnnotationPath>
+                                <AnnotationPath>@UI.LineItem</AnnotationPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <!-- PartMaster: List Report + Object Page -->
+            <Annotations Target="ZTEI_PART_SRV_SRV.PartMaster">
+
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="Part"/>
+                        <PropertyValue Property="TypeNamePlural" String="Parts"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="PartNo"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="PartDescription"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+                <!-- Search Filters -->
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>PartNo</PropertyPath>
+                        <PropertyPath>CriticalityLevel</PropertyPath>
+                        <PropertyPath>Status</PropertyPath>
+                    </Collection>
+                </Annotation>
+
+                <!-- List Table Columns -->
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <!-- Custom Actions (Buttons on Toolbar) -->
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Onayla (Approve)"/>
+                            <PropertyValue Property="Action" String="ZTEI_PART_SRV_SRV.ZTEI_PART_SRV_SRV_Entities/ApprovePart"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+                        </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Onayı Kaldır (Reject)"/>
+                            <PropertyValue Property="Action" String="ZTEI_PART_SRV_SRV.ZTEI_PART_SRV_SRV_Entities/RejectPart"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+                        </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="Yeni Ölçüm Gir"/>
+                            <PropertyValue Property="Action" String="ZTEI_PART_SRV_SRV.ZTEI_PART_SRV_SRV_Entities/SubmitQualityMeasurement"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+                        </Record>
+
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="PartId"/>
+                            <PropertyValue Property="Label" String="Part ID"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="PartNo"/>
+                            <PropertyValue Property="Label" String="Part Number"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="DrawingNo"/>
+                            <PropertyValue Property="Label" String="Drawing No"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="PartDescription"/>
+                            <PropertyValue Property="Label" String="Description"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="MaterialSpec"/>
+                            <PropertyValue Property="Label" String="Material"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="CriticalityLevel"/>
+                            <PropertyValue Property="Label" String="Criticality"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Status"/>
+                            <PropertyValue Property="Label" String="Status"/>
+                            <PropertyValue Property="Criticality" Path="ResultCriticality"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+
+                <!-- Detail Page: General Information -->
+                <Annotation Term="UI.FieldGroup" Qualifier="GeneralInfo">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Label" String="General Information"/>
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="PartId"/>
+                                    <PropertyValue Property="Label" String="Part ID"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="PartNo"/>
+                                    <PropertyValue Property="Label" String="Part Number"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="DrawingNo"/>
+                                    <PropertyValue Property="Label" String="Drawing No"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="PartDescription"/>
+                                    <PropertyValue Property="Label" String="Description"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="MaterialSpec"/>
+                                    <PropertyValue Property="Label" String="Material Specification"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="CriticalityLevel"/>
+                                    <PropertyValue Property="Label" String="Criticality Level"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Status"/>
+                                    <PropertyValue Property="Label" String="Status"/>
+                                    <PropertyValue Property="Criticality" Path="ResultCriticality"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="CreationDate"/>
+                                    <PropertyValue Property="Label" String="Creation Date"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="CreatedBy"/>
+                                    <PropertyValue Property="Label" String="Created By"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+                <!-- Detail Page Sections (Facets) -->
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <!-- General Info Section -->
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="General Information"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#GeneralInfo"/>
+                        </Record>
+                        <!-- Operation Log Section -->
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Operation History"/>
+                            <PropertyValue Property="Target" AnnotationPath="OperLogs/@UI.LineItem"/>
+                        </Record>
+                        <!-- Quality Results Section -->
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Quality Results"/>
+                            <PropertyValue Property="Target" AnnotationPath="QualResults/@UI.LineItem"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+
+            </Annotations>
+
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

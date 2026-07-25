@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+<edmx:DataServices m:DataServiceVersion="2.0">
+<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZTEI_PART_SRV_SRV" xml:lang="en" sap:schema-version="1">
+<EntityType Name="PartMaster" sap:semantics="aggregate" sap:content-version="1">
+<Key>
+<PropertyRef Name="PartId"/>
+</Key>
+<Property Name="ResultCriticality" Type="Edm.Byte" Nullable="false" sap:unicode="false" sap:label="Int." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="StatusCriticality" Type="Edm.Byte" Nullable="false" sap:aggregation-role="measure" sap:unicode="false" sap:label="Int." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="PartId" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="PART_ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="PartNo" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="PART_NO" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="DrawingNo" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="DRAWING_NO" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="PartDescription" Type="Edm.String" Nullable="false" MaxLength="100" sap:unicode="false" sap:label="PART_DESCRIPTION" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="MaterialSpec" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="MATERIAL_SPEC" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="CriticalityLevel" Type="Edm.String" Nullable="false" MaxLength="1" sap:aggregation-role="dimension" sap:unicode="false" sap:label="CRITICALITY_LEVEL" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="CreationDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="CreatedBy" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="User Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="STATUS" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<NavigationProperty Name="QualResults" Relationship="ZTEI_PART_SRV_SRV.PartMasterToQualResult" FromRole="FromRole_PartMasterToQualResult" ToRole="ToRole_PartMasterToQualResult"/>
+<NavigationProperty Name="OperLogs" Relationship="ZTEI_PART_SRV_SRV.PartMasterToOperLog" FromRole="FromRole_PartMasterToOperLog" ToRole="ToRole_PartMasterToOperLog"/>
+</EntityType>
+<EntityType Name="OperLog" sap:content-version="1">
+<Key>
+<PropertyRef Name="PartId"/>
+<PropertyRef Name="OperationSeq"/>
+</Key>
+<Property Name="ResultCriticality" Type="Edm.Byte" Nullable="false" sap:unicode="false" sap:label="Int." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="PartId" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="PART_ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="OperationSeq" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="OPERATION_SEQ" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="OperationType" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="OPERATION_TYPE" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="MachineId" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="MACHINE_ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="OperatorId" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="OPERATOR_ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="StartDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="EndDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="OperationNotes" Type="Edm.String" Nullable="false" MaxLength="255" sap:unicode="false" sap:label="OPERATION_NOTES" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="OperResult" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="OPER_RESULT" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<NavigationProperty Name="PartMaster" Relationship="ZTEI_PART_SRV_SRV.PartMasterToOperLog" FromRole="ToRole_PartMasterToOperLog" ToRole="FromRole_PartMasterToOperLog"/>
+</EntityType>
+<EntityType Name="QualStatus" sap:content-version="1">
+<Key>
+<PropertyRef Name="PartId"/>
+<PropertyRef Name="TestSeq"/>
+</Key>
+<Property Name="QualCriticality" Type="Edm.Byte" Nullable="false" sap:unicode="false" sap:label="Int." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="PartId" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="PART_ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="TestSeq" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="TEST_SEQ" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="DimensionName" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="DIMENSION_NAME" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="NominalValue" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:label="NOMINAL_VALUE" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="TolerancePlus" Type="Edm.Decimal" Nullable="false" Precision="7" Scale="4" sap:unicode="false" sap:label="TOLERANCE_PLUS" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="ToleranceMinus" Type="Edm.Decimal" Nullable="false" Precision="7" Scale="4" sap:unicode="false" sap:label="TOLERANCE_MINUS" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="ActualValue" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:label="ACTUAL_VALUE" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="QualResult" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="QUAL_RESULT" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="CmmDeviceId" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="CMM_DEVICE_ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="InspectorId" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="INSPECTOR_ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="MeasurementDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+</EntityType>
+<Association Name="PartMasterToQualResult" sap:content-version="1">
+<End Type="ZTEI_PART_SRV_SRV.PartMaster" Multiplicity="1" Role="FromRole_PartMasterToQualResult"/>
+<End Type="ZTEI_PART_SRV_SRV.QualStatus" Multiplicity="*" Role="ToRole_PartMasterToQualResult"/>
+<ReferentialConstraint>
+<Principal Role="FromRole_PartMasterToQualResult">
+<PropertyRef Name="PartId"/>
+</Principal>
+<Dependent Role="ToRole_PartMasterToQualResult">
+<PropertyRef Name="PartId"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="PartMasterToOperLog" sap:content-version="1">
+<End Type="ZTEI_PART_SRV_SRV.PartMaster" Multiplicity="1" Role="FromRole_PartMasterToOperLog"/>
+<End Type="ZTEI_PART_SRV_SRV.OperLog" Multiplicity="*" Role="ToRole_PartMasterToOperLog"/>
+<ReferentialConstraint>
+<Principal Role="FromRole_PartMasterToOperLog">
+<PropertyRef Name="PartId"/>
+</Principal>
+<Dependent Role="ToRole_PartMasterToOperLog">
+<PropertyRef Name="PartId"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<EntityContainer Name="ZTEI_PART_SRV_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+<EntitySet Name="PartMasterSet" EntityType="ZTEI_PART_SRV_SRV.PartMaster" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+<EntitySet Name="OperLogSet" EntityType="ZTEI_PART_SRV_SRV.OperLog" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+<EntitySet Name="QualResultSet" EntityType="ZTEI_PART_SRV_SRV.QualStatus" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+<AssociationSet Name="PartMasterToQualResultSet" Association="ZTEI_PART_SRV_SRV.PartMasterToQualResult" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="PartMasterSet" Role="FromRole_PartMasterToQualResult"/>
+<End EntitySet="QualResultSet" Role="ToRole_PartMasterToQualResult"/>
+</AssociationSet>
+<AssociationSet Name="PartMasterToOperLogSet" Association="ZTEI_PART_SRV_SRV.PartMasterToOperLog" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="PartMasterSet" Role="FromRole_PartMasterToOperLog"/>
+<End EntitySet="OperLogSet" Role="ToRole_PartMasterToOperLog"/>
+</AssociationSet>
+<FunctionImport Name="ApprovePart" ReturnType="ZTEI_PART_SRV_SRV.PartMaster" EntitySet="PartMasterSet" m:HttpMethod="POST" sap:action-for="ZTEI_PART_SRV_SRV.PartMaster">
+<Parameter Name="PartId" Type="Edm.String" Mode="In" MaxLength="10"/>
+</FunctionImport>
+<FunctionImport Name="RejectPart" ReturnType="ZTEI_PART_SRV_SRV.PartMaster" EntitySet="PartMasterSet" m:HttpMethod="POST" sap:action-for="ZTEI_PART_SRV_SRV.PartMaster">
+<Parameter Name="PartId" Type="Edm.String" Mode="In" MaxLength="10"/>
+</FunctionImport>
+</EntityContainer>
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://vhcalnplci:8000/sap/opu/odata/sap/ZTEI_PART_SRV_SRV/$metadata"/>
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="http://vhcalnplci:8000/sap/opu/odata/sap/ZTEI_PART_SRV_SRV/$metadata"/>
+</Schema>
+</edmx:DataServices>
+</edmx:Edmx>
