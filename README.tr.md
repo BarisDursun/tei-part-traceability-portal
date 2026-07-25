@@ -6,13 +6,7 @@
 
 > Kritik bir motor veya uçak parçası verildiğinde, saniyeler içinde cevap ver: *"Bu parçayı hangi tezgah üretti, hangi operatör çalıştırdı, hangi CMM cihazı ölçtü ve tüm ölçümler tolerans içinde miydi?"*
 
-<!--
-  📸 EKRAN GÖRÜNTÜSÜ — Ana görsel
-  Parça listesi (donut chart ile birlikte) ekran görüntüsünü buraya ekle.
-  Örnek: ![Parça Listesi](docs/images/PLACEHOLDER-list-report.png)
--->
-
-![Parça Listesi](docs/images/PLACEHOLDER-list-report.png)
+![Parça Listesi](docs/images/list-report.png)
 
 ---
 
@@ -98,10 +92,7 @@ ZTEI_PART_MASTER (1)────────────────┬───
 
 Her parçanın (örn. bir türbin kanadı ya da kompresör diski) kendi operasyon geçmişi ve kendi kalite muayene sonuçlarıyla **bire-çok** ilişkisi var.
 
-<!--
-  📸 EKRAN GÖRÜNTÜSÜ — SE11/SE16 tablo yapısı ya da verisi
-  Örnek: ![SE11'de Z Tabloları](docs/images/PLACEHOLDER-se11-tables.png)
--->
+![SE11'de Z Tabloları](docs/images/se11-tables.png)
 
 ### OData Servisi
 
@@ -117,10 +108,7 @@ Her parçanın (örn. bir türbin kanadı ya da kompresör diski) kendi operasyo
   | `ApproveQuality` / `RejectQuality` | QualStatus | Tekil bir kalite ölçümünde manuel onay |
   | `SubmitQualityMeasurement` | PartMaster | **Yeni** bir kalite ölçümü girme — otomatik doğrulamayı tetikler (aşağıya bak) |
 
-<!--
-  📸 EKRAN GÖRÜNTÜSÜ — SEGW / ADT service builder ya da metadata görünümü
-  Örnek: ![OData Servis Metadata](docs/images/PLACEHOLDER-odata-metadata.png)
--->
+![OData Servis Metadata](docs/images/odata-metadata.png)
 
 ### İş Mantığı: Otomatik Tolerans Doğrulama
 
@@ -149,10 +137,7 @@ ENDCLASS.
 
 **`ZCL_TEI_QUALITY_NOTIFIER`** — bir ölçüm başarısız olduğunda, hiçbir manuel tetikleme gerekmeden `CL_BCS` üzerinden e-posta gönderiyor.
 
-<!--
-  📸 EKRAN GÖRÜNTÜSÜ — ZCL_TEI_QUALITY_VALIDATOR / ZCL_TEI_QUALITY_NOTIFIER sınıflarının SE24/ADT görünümü
-  Örnek: ![ABAP OOP Sınıfları](docs/images/PLACEHOLDER-oop-classes.png)
--->
+![ABAP OOP Sınıfları](docs/images/oop-classes.png)
 
 `SubmitQualityMeasurement` action'ı tarafından tetiklenen akış:
 
@@ -173,10 +158,8 @@ Kalite mühendisi yeni bir ölçüm girer (Actual Value)
                               otomatik olarak uyarı e-postası gönderir
 ```
 
-<!--
-  📸 EKRAN GÖRÜNTÜSÜ — Fiori'de "Yeni Ölçüm Gir" formu ve sonuç olarak oluşan Fail satırı
-  Örnek: ![Tolerans İhlali Akışı](docs/images/PLACEHOLDER-tolerance-check.png)
--->
+![Yeni Ölçüm Gir Formu](docs/images/tolerance-check.png)
+![Tolerans İhlali → Fail Satırı](docs/images/tolerance-check-fail.png)
 
 ### Onay / Red İş Akışı ve Durum Roll-Up'ı
 
@@ -184,10 +167,7 @@ Onaylar üç seviyede gerçekleşiyor — parça, operasyon ve kalite ölçümü
 
 Otomatikleştirilen tek kural şu: **herhangi bir alt kaydın (bir operasyon ya da kalite ölçümü) reddedilmesi, anında üst parçanın durumunu Reddedildi'ye çekiyor.** Bu doğrudan OData action handler'ında (`DPC_EXT`) uygulanıyor, yani reddedilmiş bir alt kaydın "OK" görünen bir parçanın içinde saklanması mümkün değil.
 
-<!--
-  📸 EKRAN GÖRÜNTÜSÜ — Kırmızı durumlu reddedilmiş bir parça ve onun reddedilmiş alt satırı
-  Örnek: ![Roll-up Örneği](docs/images/PLACEHOLDER-rollup.png)
--->
+![Roll-up Örneği](docs/images/rollup.png)
 
 ### CDS View: Birleşik Üretim Zaman Çizelgesi
 
@@ -231,10 +211,7 @@ union
 
 Bu view, `@OData.publish: true` ile doğrudan kendi OData servisi (`ZTEI_I_PART_TRACE_EVT_CDS`) olarak yayınlanıyor — elle MPC/DPC sınıfı yazmaya gerek kalmadan — ve herhangi bir istemciden bağımsız olarak tüketilebiliyor (SAP Gateway Client / düz OData `$metadata` ve entity-set çağrılarıyla doğrulandı).
 
-<!--
-  📸 EKRAN GÖRÜNTÜSÜ — CDS view'in ADT Data Preview'ı ya da Gateway Client test sonucu
-  Örnek: ![CDS View Data Preview](docs/images/PLACEHOLDER-cds-preview.png)
--->
+![CDS View Data Preview](docs/images/cds-preview.png)
 
 ### Frontend (SAP Fiori Elements)
 
@@ -245,16 +222,14 @@ Arayüz bir **SAP Fiori Elements v2** uygulaması (SAPUI5 1.150, `sap_horizon` t
 - `webapp/annotations/annotation.xml` her şeyi yönetiyor: alan etiketleri, liste kolonları, chart tanımı, action butonları ve Object Page facet'leri
 - Küçük bir `Component.js` uzantısı, OData modelini periyodik olarak yeniden senkronize ediyor — böylece bir alt entity üzerindeki action'larla yapılan değişiklikler (Fiori Elements'in üst listeye otomatik yansıtmadığı) manuel yenilemeye gerek kalmadan görünür oluyor.
 
-<!--
-  📸 EKRAN GÖRÜNTÜSÜ — 3 bölümün de göründüğü Object Page
-  Örnek: ![Object Page](docs/images/PLACEHOLDER-object-page.png)
--->
+![Object Page — üst](docs/images/object-page-top.png)
+![Object Page — alt](docs/images/object-page-bottom.png)
 
 ---
 
 ## Ekran Görüntüleri
 
-Ekran görüntüleri bu doküman boyunca ilgili bölümün hemen altında yer alıyor: en üstte parça listesi (hero görsel), [Mimari](#mimari) altında SE11/SE16 tabloları ve SEGW/ADT metadata, [İş Mantığı](#iş-mantığı-otomatik-tolerans-doğrulama) altında OOP sınıfları ve tolerans ihlali akışı, [Onay/Red İş Akışı](#onay--red-iş-akışı-ve-durum-roll-upı) altında roll-up örneği, [CDS View](#cds-view-birleşik-üretim-zaman-çizelgesi) altında CDS preview, [Frontend](#frontend-sap-fiori-elements) altında tam Object Page, ve [Bilinen Kısıtlar](#bilinen-kısıtlar) altında SOST'ta kuyruğa alınmış uyarı e-postası. Her `docs/images/PLACEHOLDER-*.png` referansını aynı isimle kendi ekran görüntünle değiştirmen yeterli.
+Ekran görüntüleri bu doküman boyunca ilgili bölümün hemen altında yer alıyor: en üstte parça listesi (hero görsel), [Mimari](#mimari) altında SE11/SE16 tabloları ve SEGW/ADT metadata, [İş Mantığı](#iş-mantığı-otomatik-tolerans-doğrulama) altında OOP sınıfları ve tolerans ihlali akışı, [Onay/Red İş Akışı](#onay--red-iş-akışı-ve-durum-roll-upı) altında roll-up örneği, [CDS View](#cds-view-birleşik-üretim-zaman-çizelgesi) altında CDS preview, [Frontend](#frontend-sap-fiori-elements) altında tam Object Page, ve [Bilinen Kısıtlar](#bilinen-kısıtlar) altında SOST'ta kuyruğa alınmış uyarı e-postası.
 
 ---
 
@@ -332,10 +307,7 @@ Bu, OData çağrılarını `ui5.yaml`'da tanımlı backend'e proxy'ler (varsayı
 
 - **E-posta gönderimi SAPconnect (SCOT) yapılandırmasına bağlı.** Bildirim mantığı (`ZCL_TEI_QUALITY_NOTIFIER`) uyarı e-postasını doğru şekilde oluşturup kuyruğa alıyor (`SOST`'ta doğrulanabilir), ama gerçek internet teslimatı `SCOT`'ta çalışan bir SMTP relay node'u gerektiriyor. İzole/deneme sistemlerinde (örn. geliştirme sırasında kullanılan SAP NetWeaver deneme sistemi), bu kuyruk adımı *Internal Routing Error* ile başarısız olabilir — bu bir altyapı/Basis yapılandırma eksikliği, uygulama hatası değil.
 
-  <!--
-    📸 EKRAN GÖRÜNTÜSÜ — SOST'ta kuyruğa alınmış uyarı e-postası
-    Örnek: ![SOST Kuyruğa Alınmış Uyarı](docs/images/PLACEHOLDER-sost-queue.png)
-  -->
+  ![SOST Kuyruğa Alınmış Uyarı](docs/images/sost-queue.png)
 
 - **Ana uygulamada gerçek bir "Timeline" bileşeni yok.** Fiori Elements Object Page'e gömülü gerçek bir `sap.m.Timeline` kontrolü denendi, ama bu SAPUI5 versiyonunun Smart Template implementasyonundaki dokümante edilmemiş extensibility kısıtlarına takıldı. Kronolojik veri bugün iki ayrı tablo (Operation History, Quality Results) üzerinden ve gelecekte bir timeline arayüzü tarafından tüketilmeye hazır, CDS tabanlı birleşik olay servisi üzerinden mevcut.
 - **Hiç mock veri dahil edilmedi.** Uygulama bilinçli olarak sadece canlı bir backend'e karşı çalışacak şekilde yapılandırıldı (bkz. [Başlarken](#başlarken)).

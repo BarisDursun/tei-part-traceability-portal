@@ -6,13 +6,7 @@
 
 > Given a critical engine or aircraft part, answer in seconds: *"Which machine produced this part, which operator ran it, which CMM device inspected it, and did every measurement pass tolerance?"*
 
-<!--
-  📸 SCREENSHOT — Hero image
-  Add a screenshot of the List Report (Parts list with the donut chart) here.
-  Example: ![Part List Overview](docs/images/list-report.png)
--->
-
-![Part List Overview](docs/images/PLACEHOLDER-list-report.png)
+![Part List Overview](docs/images/list-report.png)
 
 ---
 
@@ -98,10 +92,7 @@ ZTEI_PART_MASTER (1)───────────────┬────
 
 Each part (e.g. a turbine blade or compressor disk) has a **1-to-many** relationship with its own operation history and its own quality inspection results.
 
-<!--
-  📸 SCREENSHOT — SE11/SE16 table structure or data
-  Example: ![Z-Tables in SE11](docs/images/PLACEHOLDER-se11-tables.png)
--->
+![Z-Tables in SE11](docs/images/se11-tables.png)
 
 ### OData Service
 
@@ -117,10 +108,7 @@ The service `ZTEI_PART_SRV_SRV` (OData V2, classic SAP Gateway / SEGW, MPC_EXT +
   | `ApproveQuality` / `RejectQuality` | QualStatus | Manual sign-off on a single quality measurement |
   | `SubmitQualityMeasurement` | PartMaster | Enter a **new** quality measurement — triggers automatic validation (see below) |
 
-<!--
-  📸 SCREENSHOT — SEGW / ADT service builder or metadata view
-  Example: ![OData Service Metadata](docs/images/PLACEHOLDER-odata-metadata.png)
--->
+![OData Service Metadata](docs/images/odata-metadata.png)
 
 ### Business Logic: Automatic Tolerance Validation
 
@@ -149,10 +137,7 @@ ENDCLASS.
 
 **`ZCL_TEI_QUALITY_NOTIFIER`** — sends an email via `CL_BCS` when a measurement fails, with no manual trigger required.
 
-<!--
-  📸 SCREENSHOT — SE24/ADT class view of ZCL_TEI_QUALITY_VALIDATOR / ZCL_TEI_QUALITY_NOTIFIER
-  Example: ![ABAP OOP Classes](docs/images/PLACEHOLDER-oop-classes.png)
--->
+![ABAP OOP Classes](docs/images/oop-classes.png)
 
 The flow, triggered by the `SubmitQualityMeasurement` action:
 
@@ -173,10 +158,8 @@ Quality inspector enters a new measurement (Actual Value)
                               to the quality manager, automatically
 ```
 
-<!--
-  📸 SCREENSHOT — "Submit Quality Measurement" dialog in Fiori, plus the resulting Fail row
-  Example: ![Tolerance Violation Flow](docs/images/PLACEHOLDER-tolerance-check.png)
--->
+![Submit Quality Measurement Form](docs/images/tolerance-check.png)
+![Tolerance Violation → Fail Row](docs/images/tolerance-check-fail.png)
 
 ### Approve / Reject Workflow with Status Roll-Up
 
@@ -184,10 +167,7 @@ Approvals happen at three levels — part, operation, and quality measurement �
 
 The one rule that *is* automated: **rejecting any child record (an operation or a quality measurement) immediately rolls the parent part's status up to Rejected.** This is implemented directly in the OData action handler (`DPC_EXT`), so there's no way for a rejected sub-record to hide inside an "OK" part.
 
-<!--
-  📸 SCREENSHOT — Object Page showing a rejected part with a red status, and its rejected child row
-  Example: ![Roll-up in Action](docs/images/PLACEHOLDER-rollup.png)
--->
+![Roll-up in Action](docs/images/rollup.png)
 
 ### CDS View: Unified Production Timeline
 
@@ -231,10 +211,7 @@ union
 
 This view is published directly as its own OData service (`ZTEI_I_PART_TRACE_EVT_CDS`) via `@OData.publish: true` — no manual MPC/DPC classes required — and is independently consumable from any client (verified via SAP Gateway Client / plain OData `$metadata` and entity-set calls).
 
-<!--
-  📸 SCREENSHOT — ADT Data Preview of the CDS view, or the Gateway Client test result
-  Example: ![CDS View Data Preview](docs/images/PLACEHOLDER-cds-preview.png)
--->
+![CDS View Data Preview](docs/images/cds-preview.png)
 
 ### Frontend (SAP Fiori Elements)
 
@@ -245,16 +222,14 @@ The UI is a **SAP Fiori Elements v2** application (SAPUI5 1.150, `sap_horizon` t
 - `webapp/annotations/annotation.xml` drives everything: field labels, list columns, the chart definition, action buttons, and Object Page facets.
 - A small `Component.js` extension periodically re-syncs the OData model, so that changes made through actions on a child entity (which Fiori Elements doesn't automatically propagate to the parent list) become visible without a manual refresh.
 
-<!--
-  📸 SCREENSHOT — Object Page with all 3 sections visible
-  Example: ![Object Page](docs/images/PLACEHOLDER-object-page.png)
--->
+![Object Page — top](docs/images/object-page-top.png)
+![Object Page — bottom](docs/images/object-page-bottom.png)
 
 ---
 
 ## Screenshots
 
-Screenshots are placed inline throughout this document, right below the section they illustrate: the hero part list at the top, SE11/SE16 tables and SEGW/ADT metadata under [Architecture](#architecture), the OOP classes and the tolerance-violation flow under [Business Logic](#business-logic-automatic-tolerance-validation), the roll-up example under [Approve / Reject Workflow](#approve--reject-workflow-with-status-roll-up), the CDS preview under [CDS View](#cds-view-unified-production-timeline), the full Object Page under [Frontend](#frontend-sap-fiori-elements), and the SOST queued alert under [Known Limitations](#known-limitations). Replace each `docs/images/PLACEHOLDER-*.png` reference with your own screenshot of the same name.
+Screenshots are placed inline throughout this document, right below the section they illustrate: the hero part list at the top, SE11/SE16 tables and SEGW/ADT metadata under [Architecture](#architecture), the OOP classes and the tolerance-violation flow under [Business Logic](#business-logic-automatic-tolerance-validation), the roll-up example under [Approve / Reject Workflow](#approve--reject-workflow-with-status-roll-up), the CDS preview under [CDS View](#cds-view-unified-production-timeline), the full Object Page under [Frontend](#frontend-sap-fiori-elements), and the SOST queued alert under [Known Limitations](#known-limitations).
 
 ---
 
@@ -332,10 +307,7 @@ This proxies OData calls to the backend defined in `ui5.yaml` (`http://vhcalnplc
 
 - **Email delivery depends on SAPconnect (SCOT) configuration.** The notification logic (`ZCL_TEI_QUALITY_NOTIFIER`) correctly builds and queues the alert email (verifiable in `SOST`), but actual internet delivery requires a working SMTP relay node in `SCOT`. On isolated/trial systems (e.g. the SAP NetWeaver trial box used during development), this queue step may fail with an *Internal Routing Error* — this is an infrastructure/Basis configuration gap, not an application defect.
 
-  <!--
-    📸 SCREENSHOT — SOST queued email alert
-    Example: ![SOST Queued Alert](docs/images/PLACEHOLDER-sost-queue.png)
-  -->
+  ![SOST Queued Alert](docs/images/sost-queue.png)
 
 - **No literal "Timeline" widget in the main app.** A true `sap.m.Timeline` control embedded in the Fiori Elements Object Page was attempted, but ran into undocumented extensibility constraints in this SAPUI5 version's Smart Template implementation. Chronological data is available today via two separate tables (Operation History, Quality Results) and via the CDS-based unified event service, which is ready to be consumed by a timeline UI in the future.
 - **No mock data is shipped.** The app is deliberately configured to run only against a live backend (see [Getting Started](#getting-started)).
