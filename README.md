@@ -149,6 +149,11 @@ ENDCLASS.
 
 **`ZCL_TEI_QUALITY_NOTIFIER`** — sends an email via `CL_BCS` when a measurement fails, with no manual trigger required.
 
+<!--
+  📸 SCREENSHOT — SE24/ADT class view of ZCL_TEI_QUALITY_VALIDATOR / ZCL_TEI_QUALITY_NOTIFIER
+  Example: ![ABAP OOP Classes](docs/images/PLACEHOLDER-oop-classes.png)
+-->
+
 The flow, triggered by the `SubmitQualityMeasurement` action:
 
 ```
@@ -249,18 +254,7 @@ The UI is a **SAP Fiori Elements v2** application (SAPUI5 1.150, `sap_horizon` t
 
 ## Screenshots
 
-> Replace the placeholders below with your own screenshots (Fiori app + SAP GUI/ADT backend views). Suggested shots:
-
-| | |
-|---|---|
-| **Parts List + Criticality Chart** | ![placeholder](docs/images/PLACEHOLDER-1.png) |
-| **Object Page (Operation History / Quality Results)** | ![placeholder](docs/images/PLACEHOLDER-2.png) |
-| **Submit Quality Measurement dialog** | ![placeholder](docs/images/PLACEHOLDER-3.png) |
-| **Tolerance violation → Rejected status + red icon** | ![placeholder](docs/images/PLACEHOLDER-4.png) |
-| **SOST — automated email alert queued** | ![placeholder](docs/images/PLACEHOLDER-5.png) |
-| **CDS View data preview (ADT)** | ![placeholder](docs/images/PLACEHOLDER-6.png) |
-| **ABAP OOP classes (SE24 / ADT)** | ![placeholder](docs/images/PLACEHOLDER-7.png) |
-| **Z-table structures (SE11)** | ![placeholder](docs/images/PLACEHOLDER-8.png) |
+Screenshots are placed inline throughout this document, right below the section they illustrate: the hero part list at the top, SE11/SE16 tables and SEGW/ADT metadata under [Architecture](#architecture), the OOP classes and the tolerance-violation flow under [Business Logic](#business-logic-automatic-tolerance-validation), the roll-up example under [Approve / Reject Workflow](#approve--reject-workflow-with-status-roll-up), the CDS preview under [CDS View](#cds-view-unified-production-timeline), the full Object Page under [Frontend](#frontend-sap-fiori-elements), and the SOST queued alert under [Known Limitations](#known-limitations). Replace each `docs/images/PLACEHOLDER-*.png` reference with your own screenshot of the same name.
 
 ---
 
@@ -337,6 +331,12 @@ This proxies OData calls to the backend defined in `ui5.yaml` (`http://vhcalnplc
 ## Known Limitations
 
 - **Email delivery depends on SAPconnect (SCOT) configuration.** The notification logic (`ZCL_TEI_QUALITY_NOTIFIER`) correctly builds and queues the alert email (verifiable in `SOST`), but actual internet delivery requires a working SMTP relay node in `SCOT`. On isolated/trial systems (e.g. the SAP NetWeaver trial box used during development), this queue step may fail with an *Internal Routing Error* — this is an infrastructure/Basis configuration gap, not an application defect.
+
+  <!--
+    📸 SCREENSHOT — SOST queued email alert
+    Example: ![SOST Queued Alert](docs/images/PLACEHOLDER-sost-queue.png)
+  -->
+
 - **No literal "Timeline" widget in the main app.** A true `sap.m.Timeline` control embedded in the Fiori Elements Object Page was attempted, but ran into undocumented extensibility constraints in this SAPUI5 version's Smart Template implementation. Chronological data is available today via two separate tables (Operation History, Quality Results) and via the CDS-based unified event service, which is ready to be consumed by a timeline UI in the future.
 - **No mock data is shipped.** The app is deliberately configured to run only against a live backend (see [Getting Started](#getting-started)).
 

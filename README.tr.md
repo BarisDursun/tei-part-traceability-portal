@@ -149,6 +149,11 @@ ENDCLASS.
 
 **`ZCL_TEI_QUALITY_NOTIFIER`** — bir ölçüm başarısız olduğunda, hiçbir manuel tetikleme gerekmeden `CL_BCS` üzerinden e-posta gönderiyor.
 
+<!--
+  📸 EKRAN GÖRÜNTÜSÜ — ZCL_TEI_QUALITY_VALIDATOR / ZCL_TEI_QUALITY_NOTIFIER sınıflarının SE24/ADT görünümü
+  Örnek: ![ABAP OOP Sınıfları](docs/images/PLACEHOLDER-oop-classes.png)
+-->
+
 `SubmitQualityMeasurement` action'ı tarafından tetiklenen akış:
 
 ```
@@ -249,18 +254,7 @@ Arayüz bir **SAP Fiori Elements v2** uygulaması (SAPUI5 1.150, `sap_horizon` t
 
 ## Ekran Görüntüleri
 
-> Aşağıdaki placeholder'ları kendi ekran görüntülerinle (Fiori uygulaması + SAP GUI/ADT backend görünümleri) değiştir. Önerilen kareler:
-
-| | |
-|---|---|
-| **Parça Listesi + Kritiklik Chart'ı** | ![placeholder](docs/images/PLACEHOLDER-1.png) |
-| **Object Page (Operation History / Quality Results)** | ![placeholder](docs/images/PLACEHOLDER-2.png) |
-| **Yeni Ölçüm Gir formu** | ![placeholder](docs/images/PLACEHOLDER-3.png) |
-| **Tolerans ihlali → Reddedildi durumu + kırmızı ikon** | ![placeholder](docs/images/PLACEHOLDER-4.png) |
-| **SOST — kuyruğa alınmış otomatik e-posta uyarısı** | ![placeholder](docs/images/PLACEHOLDER-5.png) |
-| **CDS View data preview (ADT)** | ![placeholder](docs/images/PLACEHOLDER-6.png) |
-| **ABAP OOP sınıfları (SE24 / ADT)** | ![placeholder](docs/images/PLACEHOLDER-7.png) |
-| **Z-tablo yapıları (SE11)** | ![placeholder](docs/images/PLACEHOLDER-8.png) |
+Ekran görüntüleri bu doküman boyunca ilgili bölümün hemen altında yer alıyor: en üstte parça listesi (hero görsel), [Mimari](#mimari) altında SE11/SE16 tabloları ve SEGW/ADT metadata, [İş Mantığı](#iş-mantığı-otomatik-tolerans-doğrulama) altında OOP sınıfları ve tolerans ihlali akışı, [Onay/Red İş Akışı](#onay--red-iş-akışı-ve-durum-roll-upı) altında roll-up örneği, [CDS View](#cds-view-birleşik-üretim-zaman-çizelgesi) altında CDS preview, [Frontend](#frontend-sap-fiori-elements) altında tam Object Page, ve [Bilinen Kısıtlar](#bilinen-kısıtlar) altında SOST'ta kuyruğa alınmış uyarı e-postası. Her `docs/images/PLACEHOLDER-*.png` referansını aynı isimle kendi ekran görüntünle değiştirmen yeterli.
 
 ---
 
@@ -337,6 +331,12 @@ Bu, OData çağrılarını `ui5.yaml`'da tanımlı backend'e proxy'ler (varsayı
 ## Bilinen Kısıtlar
 
 - **E-posta gönderimi SAPconnect (SCOT) yapılandırmasına bağlı.** Bildirim mantığı (`ZCL_TEI_QUALITY_NOTIFIER`) uyarı e-postasını doğru şekilde oluşturup kuyruğa alıyor (`SOST`'ta doğrulanabilir), ama gerçek internet teslimatı `SCOT`'ta çalışan bir SMTP relay node'u gerektiriyor. İzole/deneme sistemlerinde (örn. geliştirme sırasında kullanılan SAP NetWeaver deneme sistemi), bu kuyruk adımı *Internal Routing Error* ile başarısız olabilir — bu bir altyapı/Basis yapılandırma eksikliği, uygulama hatası değil.
+
+  <!--
+    📸 EKRAN GÖRÜNTÜSÜ — SOST'ta kuyruğa alınmış uyarı e-postası
+    Örnek: ![SOST Kuyruğa Alınmış Uyarı](docs/images/PLACEHOLDER-sost-queue.png)
+  -->
+
 - **Ana uygulamada gerçek bir "Timeline" bileşeni yok.** Fiori Elements Object Page'e gömülü gerçek bir `sap.m.Timeline` kontrolü denendi, ama bu SAPUI5 versiyonunun Smart Template implementasyonundaki dokümante edilmemiş extensibility kısıtlarına takıldı. Kronolojik veri bugün iki ayrı tablo (Operation History, Quality Results) üzerinden ve gelecekte bir timeline arayüzü tarafından tüketilmeye hazır, CDS tabanlı birleşik olay servisi üzerinden mevcut.
 - **Hiç mock veri dahil edilmedi.** Uygulama bilinçli olarak sadece canlı bir backend'e karşı çalışacak şekilde yapılandırıldı (bkz. [Başlarken](#başlarken)).
 
